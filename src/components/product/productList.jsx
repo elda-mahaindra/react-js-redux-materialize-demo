@@ -1,19 +1,25 @@
 // ---------------------------------------------- modules import
 import React from "react";
+import { connect } from "react-redux";
 
 import ProductSummary from "./productSummary";
 
 // ---------------------------------------------- the component
-const ProductList = () => (
+const ProductList = ({ products }) => (
   <div className="row">
-    <ProductSummary />
-    <ProductSummary />
-    <ProductSummary />
-    <ProductSummary />
-    <ProductSummary />
-    <ProductSummary />
-    <ProductSummary />
+    {products.length ? (
+      products.map(product => (
+        <ProductSummary key={product.id} product={product} />
+      ))
+    ) : (
+      <div className="center">No products yet.</div>
+    )}
   </div>
 );
 
-export default ProductList;
+// ---------------------------------------------- map state to props
+const mapStateToProps = state => ({
+  products: state.product.products
+});
+
+export default connect(mapStateToProps)(ProductList);
