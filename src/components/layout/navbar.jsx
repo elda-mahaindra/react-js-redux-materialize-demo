@@ -1,5 +1,6 @@
 // ---------------------------------------------- modules import
 import React from "react";
+import { Link } from "react-router-dom";
 
 import LoggedInLink from "./loggedInLink";
 import LoggedOutLink from "./loggedOutLink";
@@ -8,12 +9,14 @@ import LoggedOutLink from "./loggedOutLink";
 const Navbar = () => (
   <nav className="nav-wrapper red darken-1" style={{ marginBottom: "50px" }}>
     <div className="container">
-      <span
-        className="brand-logo hide-on-med-and-down"
-        style={{ fontSize: "1.5rem", fontWeight: 400 }}
-      >
-        React Js Demo
-      </span>
+      <Link to="/">
+        <span
+          className="brand-logo hide-on-med-and-down"
+          style={{ fontSize: "1.5rem", fontWeight: 400 }}
+        >
+          React Js Demo
+        </span>
+      </Link>
       <ul className="right">
         <LoggedInLink />
         <LoggedOutLink />

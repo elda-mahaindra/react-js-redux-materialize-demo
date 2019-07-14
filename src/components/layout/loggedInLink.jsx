@@ -1,5 +1,6 @@
 // ---------------------------------------------- modules import
 import React, { Fragment } from "react";
+import { Link } from "react-router-dom";
 
 // ---------------------------------------------- the component
 const LoggedInLink = () => {
@@ -14,7 +15,7 @@ const LoggedInLink = () => {
   return (
     <Fragment>
       <li>
-        <a href="/product/add">Add Product</a>
+        <Link to="/product/add">Add Product</Link>
       </li>
       <li>
         <a href="/" onClick={handleLogout}>

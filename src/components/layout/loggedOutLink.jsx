@@ -1,14 +1,15 @@
 // ---------------------------------------------- modules import
 import React, { Fragment } from "react";
+import { Link } from "react-router-dom";
 
 // ---------------------------------------------- the component
 const LoggedOutLink = () => (
   <Fragment>
     <li>
-      <a href="/register">Register</a>
+      <Link to="/register">Register</Link>
     </li>
     <li>
-      <a href="/login">Login</a>
+      <Link to="/login">Login</Link>
     </li>
   </Fragment>
 );
