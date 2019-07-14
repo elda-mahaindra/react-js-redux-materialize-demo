@@ -1,14 +1,15 @@
 // ---------------------------------------------- modules import
 import React from "react";
 
-import Dashboard from "./components/layout/dashboard";
+import Login from "./components/auth/login";
+// import Dashboard from "./components/layout/dashboard";
 import Navbar from "./components/layout/navbar";
 
 // ---------------------------------------------- the component
 const App = () => (
   <div className="App">
     <Navbar />
-    <Dashboard />
+    <Login />
   </div>
 );
 
