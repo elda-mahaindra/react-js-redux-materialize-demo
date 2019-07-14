@@ -16,7 +16,29 @@ const authReducer = (state = initialState, action) => {
       return state;
     }
     case LOGIN: {
-      return state;
+      const matchingUser = state.users.find(
+        user => user.email === action.payload.user.email
+      );
+
+      if (matchingUser) {
+        if (matchingUser.password === action.payload.user.password) {
+          return {
+            ...state,
+            token: "thisisthesecrettoken",
+            error: null
+          };
+        }
+        return {
+          ...state,
+          token: null,
+          error: "authentication failed. wrong password."
+        };
+      }
+      return {
+        ...state,
+        token: null,
+        error: "authentication failed. user not found."
+      };
     }
     case LOGOUT: {
       return state;

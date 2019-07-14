@@ -1,9 +1,13 @@
 // ---------------------------------------------- modules import
 import M from "materialize-css";
 import React, { useEffect, useState } from "react";
+import { connect } from "react-redux";
+import { Redirect } from "react-router-dom";
+
+import { loginAction } from "../../store/auth/actions";
 
 // ---------------------------------------------- the component
-const Login = () => {
+const Login = ({ token, error, login }) => {
   // ---------------------------------------------- local state
   const [user, setUser] = useState({ email: "", password: "" });
 
@@ -15,8 +19,7 @@ const Login = () => {
   const handleSubmit = e => {
     e.preventDefault();
 
-    console.log("login user");
-    console.log(user);
+    login(user);
   };
 
   // ---------------------------------------------- effects
@@ -25,7 +28,9 @@ const Login = () => {
   }, []);
 
   // ---------------------------------------------- content
-  return (
+  return token ? (
+    <Redirect to="/" />
+  ) : (
     <div className="container">
       <h5 className="center-align">LOGIN</h5>
       <div className="row">
@@ -54,7 +59,7 @@ const Login = () => {
             </button>
           </div>
           <div className="input-field red-text center">
-            <p>Error Login here.</p>
+            {error ? <p>{error}</p> : null}
           </div>
         </form>
       </div>
@@ -62,4 +67,18 @@ const Login = () => {
   );
 };
 
-export default Login;
+// ---------------------------------------------- map state to props
+const mapStateToProps = state => ({
+  token: state.auth.token,
+  error: state.auth.error
+});
+
+// ---------------------------------------------- map dispatch to props
+const mapDispatchToProps = dispatch => ({
+  login: user => dispatch(loginAction(user))
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Login);
