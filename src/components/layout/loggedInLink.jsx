@@ -1,14 +1,17 @@
 // ---------------------------------------------- modules import
 import React, { Fragment } from "react";
+import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 
+import { logoutAction } from "../../store/auth/actions";
+
 // ---------------------------------------------- the component
-const LoggedInLink = () => {
+const LoggedInLink = ({ logout }) => {
   // ---------------------------------------------- handlers
   const handleLogout = e => {
     e.preventDefault();
 
-    console.log("handle logout executed.");
+    logout();
   };
 
   // ---------------------------------------------- content
@@ -26,4 +29,12 @@ const LoggedInLink = () => {
   );
 };
 
-export default LoggedInLink;
+// ---------------------------------------------- map dispatch to props
+const mapDispatchToProps = dispatch => ({
+  logout: () => dispatch(logoutAction())
+});
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(LoggedInLink);
