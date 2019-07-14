@@ -6,6 +6,7 @@ import App from "./App";
 
 // ---------------------------------------------- styles import
 import "./index.css";
+import "materialize-css/dist/css/materialize.min.css";
 
 import * as serviceWorker from "./serviceWorker";
 
