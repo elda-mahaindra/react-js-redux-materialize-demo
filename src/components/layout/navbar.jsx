@@ -1,12 +1,13 @@
 // ---------------------------------------------- modules import
 import React from "react";
+import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 
 import LoggedInLink from "./loggedInLink";
 import LoggedOutLink from "./loggedOutLink";
 
 // ---------------------------------------------- the component
-const Navbar = () => (
+const Navbar = ({ token }) => (
   <nav className="nav-wrapper red darken-1" style={{ marginBottom: "50px" }}>
     <div className="container">
       <Link to="/">
@@ -17,12 +18,14 @@ const Navbar = () => (
           React Js Demo
         </span>
       </Link>
-      <ul className="right">
-        <LoggedInLink />
-        <LoggedOutLink />
-      </ul>
+      <ul className="right">{token ? <LoggedInLink /> : <LoggedOutLink />}</ul>
     </div>
   </nav>
 );
 
-export default Navbar;
+// ---------------------------------------------- map state to props
+const mapStateToProps = state => ({
+  token: state.auth.token
+});
+
+export default connect(mapStateToProps)(Navbar);
