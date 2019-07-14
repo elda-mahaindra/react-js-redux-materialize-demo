@@ -1,9 +1,13 @@
 // ---------------------------------------------- modules import
 import M from "materialize-css";
 import React, { useEffect, useState } from "react";
+import { connect } from "react-redux";
+import { Redirect } from "react-router-dom";
+
+import { registerAction } from "../../store/auth/actions";
 
 // ---------------------------------------------- the component
-const Register = () => {
+const Register = ({ token, error, register }) => {
   // ---------------------------------------------- local state
   const [user, setUser] = useState({ email: "", password: "" });
 
@@ -15,8 +19,7 @@ const Register = () => {
   const handleSubmit = e => {
     e.preventDefault();
 
-    console.log("register user");
-    console.log(user);
+    register(user);
   };
 
   // ---------------------------------------------- effects
@@ -25,7 +28,9 @@ const Register = () => {
   }, []);
 
   // ---------------------------------------------- content
-  return (
+  return token ? (
+    <Redirect to="/" />
+  ) : (
     <div className="container">
       <h5 className="center-align">REGISTER</h5>
       <div className="row">
@@ -54,7 +59,7 @@ const Register = () => {
             </button>
           </div>
           <div className="input-field red-text center">
-            <p>Error register/login here.</p>
+            {error ? <p>{error}</p> : null}
           </div>
         </form>
       </div>
@@ -62,4 +67,18 @@ const Register = () => {
   );
 };
 
-export default Register;
+// ---------------------------------------------- map state to props
+const mapStateToProps = state => ({
+  token: state.auth.token,
+  error: state.auth.error
+});
+
+// ---------------------------------------------- map dispatch to props
+const mapDispatchToProps = dispatch => ({
+  register: user => dispatch(registerAction(user))
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Register);

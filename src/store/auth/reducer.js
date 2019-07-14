@@ -13,7 +13,26 @@ const initialState = {
 const authReducer = (state = initialState, action) => {
   switch (action.type) {
     case REGISTER: {
-      return state;
+      const matchingUser = state.users.find(
+        user => user.email === action.payload.user.email
+      );
+
+      if (!matchingUser) {
+        const addedUser = { ...action.payload.user, id: state.nextUserId };
+
+        return {
+          ...state,
+          users: [...state.users, addedUser],
+          nextUserId: state.nextUserId + 1,
+          token: "thisisthesecrettoken"
+        };
+      }
+
+      return {
+        ...state,
+        token: null,
+        error: "register failed. email has been registered."
+      };
     }
     case LOGIN: {
       const matchingUser = state.users.find(
