@@ -17,7 +17,16 @@ const initialState = {
 const productReducer = (state = initialState, action) => {
   switch (action.type) {
     case ADD_PRODUCT: {
-      return state;
+      const addedProduct = {
+        ...action.payload.product,
+        id: state.nextProductId
+      };
+
+      return {
+        ...state,
+        products: [...state.products, addedProduct],
+        nextProductId: state.nextProductId + 1
+      };
     }
     case UPDATE_PRODUCT: {
       return state;
