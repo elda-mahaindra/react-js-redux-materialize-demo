@@ -2,6 +2,7 @@
 import M from "materialize-css";
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
+import { Redirect } from "react-router-dom";
 
 import { addProductAction } from "../../store/product/actions";
 
@@ -42,7 +43,7 @@ const AddProduct = ({ history, token, addProduct }) => {
   }, []);
 
   // ---------------------------------------------- content
-  return (
+  return token ? (
     <div className="container">
       <h5 className="center-align">ADD PRODUCT</h5>
       <div className="row">
@@ -86,6 +87,8 @@ const AddProduct = ({ history, token, addProduct }) => {
         </form>
       </div>
     </div>
+  ) : (
+    <Redirect to="/" />
   );
 };
 
