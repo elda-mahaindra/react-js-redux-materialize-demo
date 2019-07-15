@@ -1,10 +1,15 @@
 // ---------------------------------------------- modules import
 import M from "materialize-css";
 import React, { useEffect, useState } from "react";
+import { connect } from "react-redux";
+
+import { updateProductAction } from "../../store/product/actions";
 
 // ---------------------------------------------- the component
-const UpdateProduct = () => {
-  const currentProduct = null;
+const UpdateProduct = ({ history, match, token, products, updateProduct }) => {
+  const currentProduct = products.find(
+    product => product.id.toString() === match.params.productId
+  );
 
   // ---------------------------------------------- local state
   const [product, setProduct] = useState(
@@ -33,8 +38,10 @@ const UpdateProduct = () => {
   const handleSubmit = e => {
     e.preventDefault();
 
-    console.log("update product");
-    console.log(product);
+    if (token) {
+      updateProduct(product);
+      history.push("/");
+    }
   };
 
   // ---------------------------------------------- effects
@@ -117,13 +124,24 @@ const UpdateProduct = () => {
               </div>
             </div>
           </div>
-          <div className="input-field red-text center">
-            <p>Error Update Product here.</p>
-          </div>
         </form>
       </div>
     </div>
   );
 };
 
-export default UpdateProduct;
+// ---------------------------------------------- map state to props
+const mapStateToProps = state => ({
+  token: state.auth.token,
+  products: state.product.products
+});
+
+// ---------------------------------------------- map dispatch to props
+const mapDispatchToProps = dispatch => ({
+  updateProduct: product => dispatch(updateProductAction(product))
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(UpdateProduct);

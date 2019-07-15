@@ -29,7 +29,19 @@ const productReducer = (state = initialState, action) => {
       };
     }
     case UPDATE_PRODUCT: {
-      return state;
+      return {
+        ...state,
+        products: state.products.map(product => {
+          if (product.id === action.payload.product.id) {
+            return {
+              ...product,
+              ...action.payload.product
+            };
+          }
+
+          return product;
+        })
+      };
     }
     case DELETE_PRODUCT: {
       return {
